@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-content>
+      <p>
+        <span>Nombre: {{room?.name}}</span>
+        <span>Fecha de creacion: {{room?.creationDate | date: 'dd/MM/yyyy'}}</span>
+        <span>Creada por: {{room?.user?.name }}</span>
+      </p>
+  </mat-card-content>
+</mat-card>

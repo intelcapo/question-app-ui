@@ -1,0 +1,10 @@
+<div class="container-rooms">
+<h1>Salas disponibles</h1>
+<div *ngFor="let room of rooms">
+
+  <app-rooms-template [room]="room"></app-rooms-template>
+  <mat-divider></mat-divider>
+</div>
+
+</div>
+
