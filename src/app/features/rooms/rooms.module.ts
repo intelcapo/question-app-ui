@@ -10,9 +10,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { RoomsFormComponent } from './rooms-form/rooms-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatLabel } from '@angular/material/form-field';
-
-
 
 @NgModule({
   declarations: [
@@ -28,8 +25,8 @@ import { MatLabel } from '@angular/material/form-field';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-
   ],
+
   providers: [
     RoomsService
   ]

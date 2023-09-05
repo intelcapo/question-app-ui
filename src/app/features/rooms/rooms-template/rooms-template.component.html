@@ -1,9 +1,9 @@
-<mat-card>
+<mat-card [routerLink]="'/questions/'+room?.id">
   <mat-card-content>
       <p>
-        <span>Nombre: {{room?.name}}</span>
-        <span>Fecha de creacion: {{room?.creationDate | date: 'dd/MM/yyyy'}}</span>
-        <span>Creada por: {{room?.user?.name }}</span>
+        <span>Nombre: <strong>{{room?.name}}</strong></span> <br>
+        <span>Fecha de creacion: {{room?.creationDate | date: 'dd/MM/yyyy'}}</span><br>
+        <span>Creada por: {{room?.user?.name || 'Anonimo' }}</span><br>
       </p>
   </mat-card-content>
 </mat-card>

@@ -23,5 +23,10 @@ export class RoomsFormComponent {
 
   onSubmit(){
     this.createRoom.emit(this.frmRoom.value)
+    this.resetForm()
+  }
+
+  resetForm(){
+    this.frmRoom.reset()
   }
 }

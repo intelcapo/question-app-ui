@@ -11,6 +11,6 @@ export interface Question {
 }
 
 export interface CreateQuestionDTO {
-
- userId:string
+  roomId: string
+  userId:string
 }

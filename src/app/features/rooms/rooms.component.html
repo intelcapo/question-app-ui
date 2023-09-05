@@ -7,14 +7,12 @@
     <app-rooms-form (createRoom)="onCreateRoom($event)"></app-rooms-form>
   </div>
   <mat-divider></mat-divider>
-  <ng-template *ngIf="rooms.length > 0">
+  <div *ngIf="rooms.length > 0">
     <div *ngFor="let room of rooms">
-      <app-rooms-template [room]="room"></app-rooms-template>
+      <app-rooms-template class="container-rooms-content" [room]="room"></app-rooms-template>
       <mat-divider></mat-divider>
     </div>
-  </ng-template>
-  <div>
-    <h3>No hay salas para mostrar</h3>
-  </div></div>
+  </div>
+
 </div>
 

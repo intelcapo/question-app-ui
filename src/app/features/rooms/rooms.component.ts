@@ -21,7 +21,7 @@ export class RoomsComponent implements OnInit {
   getRoomList(){
     this.roomsService.getAllRooms().subscribe({
       next: (roomsResponse: Room[])=>{
-        console.log(roomsResponse)
+        console.log(roomsResponse.length)
         this.rooms = roomsResponse
       }, error:()=> {
         this.rooms = []

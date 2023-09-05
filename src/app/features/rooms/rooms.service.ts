@@ -19,4 +19,9 @@ export class RoomsService {
   create(room: CreateRoomDTO): Observable<any>{
     return this.http.post<any>(this.currentEndpoint,room)
   }
+
+  getById(roomId: string){
+    const endpointRoomById = `${this.currentEndpoint}/${roomId}`
+    return this.http.get<Room>(endpointRoomById)
+  }
 }

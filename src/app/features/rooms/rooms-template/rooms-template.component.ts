@@ -17,4 +17,8 @@ export class RoomsTemplateComponent {
       name: ''
     }
   }
+
+  get roomLink(){
+    return `/questions/${this.room?.id || '1'}`
+  }
 }
