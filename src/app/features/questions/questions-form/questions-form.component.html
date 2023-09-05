@@ -1,9 +1,9 @@
 <form [formGroup]="frmQuestion" (ngSubmit)="onSubmit()">
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="txt-question-description">
     <mat-label>Haz una pregunta</mat-label>
     <textarea matInput placeholder="Ex. Esa pregunta es para don ligero..." formControlName="description"></textarea>
   </mat-form-field>
-  <button type="submit" mat-fab color="primary">
+  <button type="submit" mat-fab color="primary" class="btn-add-question">
     <mat-icon>add</mat-icon>
   </button>
 </form>
