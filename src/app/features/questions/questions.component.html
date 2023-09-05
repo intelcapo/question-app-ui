@@ -1,0 +1,19 @@
+<div class="container-content">
+  <div class="container-questions">
+    <div>
+      <h1>{{currentRoom?.name}}</h1>
+    </div>
+    <app-questions-form (createQuestion)="handleCreateQuestion($event)"></app-questions-form>
+    <mat-divider></mat-divider>
+    <div *ngIf="questions.length > 0" class="container-questions-list">
+      <div *ngFor="let question of questions">
+        <app-questions-template [question]="question"
+          (addVote)="handleAddVote($event)"
+          (removeVote)="handleRemoveVote($event)"></app-questions-template>
+      </div>
+    </div>
+    <div *ngIf="questions.length == 0">
+      <h3>No hay preguntas aun en esta sala</h3>
+    </div>
+  </div>
+</div>

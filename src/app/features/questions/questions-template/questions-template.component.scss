@@ -1,0 +1,25 @@
+.header-image{
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.question-description{
+  padding-top: 20px;
+}
+
+
+.btn-favorite{
+  position: absolute;
+  right: 10px;
+}
+
+.badge-votes{
+  position: relative;
+  top: -5px;
+  left: 7px;
+}
+
+.container-votes{
+  position: absolute;
+  right: 30px;
+}

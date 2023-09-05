@@ -1,0 +1,11 @@
+.container-content{
+  .container-rooms{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .container-rooms-content{
+      margin-top: 10px;
+    }
+  }
+}

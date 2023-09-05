@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Room } from 'src/app/interfaces';
-
-
-
+import { CreateRoomDTO, Room } from 'src/app/interfaces';
+import { RoomsService } from './rooms.service';
 
 @Component({
   selector: 'app-rooms',
@@ -12,14 +10,35 @@ import { Room } from 'src/app/interfaces';
 export class RoomsComponent implements OnInit {
   rooms: Room[] = []
 
-  constructor() {
+  constructor(private roomsService:RoomsService) {
 
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.getRoomList()
   }
 
   getRoomList(){
+    this.roomsService.getAllRooms().subscribe({
+      next: (roomsResponse: Room[])=>{
+        console.log(roomsResponse.length)
+        this.rooms = roomsResponse
+      }, error:()=> {
+        this.rooms = []
+      }
+    })
+  }
 
+  onCreateRoom(roomToCreate: CreateRoomDTO){
+    this.roomsService.create(roomToCreate).subscribe({
+      next: (response)=>{
+        console.log(response)
+      },
+      error: (error)=>{
+        console.error(error)
+      }, complete: ()=>{
+        this.getRoomList()
+      }
+    })
   }
 }
