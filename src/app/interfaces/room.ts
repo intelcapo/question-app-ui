@@ -6,3 +6,6 @@ export interface Room {
   creationDate: Date,
   user: User
 }
+
+
+export interface CreateRoomDTO extends Omit<Room, 'id'| 'creationDate' | 'user'> {}
