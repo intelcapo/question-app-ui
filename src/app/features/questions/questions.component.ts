@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CreateQuestionDTO, Question, Room, User, VotesForQuestion } from 'src/app/interfaces';
 import { QuestionsService } from './questions.service';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { VotesService } from './votes.service';
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss']
 })
-export class QuestionsComponent implements OnInit{
+export class QuestionsComponent implements OnInit, OnDestroy{
   questions: Question[] = []
   roomId: string = ''
 
@@ -31,6 +31,8 @@ export class QuestionsComponent implements OnInit{
 
   isUsersPanelActive: boolean = false
 
+  questionsInterval: any
+
   constructor(
     private questionsService: QuestionsService,
     private activatedRoute: ActivatedRoute,
@@ -45,7 +47,19 @@ export class QuestionsComponent implements OnInit{
     this.getUrlParams()
     this.getCurrentRoom(this.roomId)
     this.getRoomQuestions(this.roomId)
+    this.createIntervalToGetQuestions()
   }
+
+  createIntervalToGetQuestions(){
+    this.questionsInterval = setInterval(()=>{
+      this.getRoomQuestions(this.roomId)
+    }, 10000)
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.questionsInterval)
+  }
+
 
   validateUserLogged(){
     this.user = this.coreService.getUserLogged()
@@ -145,5 +159,7 @@ export class QuestionsComponent implements OnInit{
     this.questionSelected = null
     this.votesForQuestion = undefined
   }
+
+
 
 }
