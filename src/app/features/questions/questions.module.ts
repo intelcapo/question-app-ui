@@ -12,7 +12,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar'
-import { MatBadgeModule } from '@angular/material/badge'
+import { MatBadgeModule } from '@angular/material/badge';
+import { QuestionsUsersComponent } from './questions-users/questions-users.component'
 
 
 
@@ -20,7 +21,8 @@ import { MatBadgeModule } from '@angular/material/badge'
   declarations: [
     QuestionsComponent,
     QuestionsFormComponent,
-    QuestionsTemplateComponent
+    QuestionsTemplateComponent,
+    QuestionsUsersComponent
   ],
   imports: [
     CommonModule,

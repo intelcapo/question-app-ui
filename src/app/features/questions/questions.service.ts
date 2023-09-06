@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { CreateQuestionDTO, Question } from 'src/app/interfaces';
+import { CreateQuestionDTO, Question, User } from 'src/app/interfaces';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
@@ -42,14 +42,14 @@ export class QuestionsService {
     return this.http.post<Question>(this.currentEndpoint, questionToCreate)
   }
 
-  addVote(questionId:string): Observable<Question>{
+  addVote(questionId:string, user: User): Observable<Question>{
     const endpoitForAddVote = `${this.currentEndpoint}/${questionId}/addVote`
-    return this.http.put<Question>(endpoitForAddVote,{id: questionId})
+    return this.http.put<Question>(endpoitForAddVote, user)
   }
 
-  removeVote(questionId:string): Observable<Question>{
+  removeVote(questionId:string, user: User): Observable<Question>{
     const endpoitForRemoveVote = `${this.currentEndpoint}/${questionId}/removeVote`
-    return this.http.put<Question>(endpoitForRemoveVote,{id: questionId})
+    return this.http.put<Question>(endpoitForRemoveVote, user)
   }
 
 

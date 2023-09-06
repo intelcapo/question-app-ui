@@ -3,7 +3,7 @@
     <div mat-card-avatar class="header-image"></div>
     <mat-card-title>{{question?.user?.name ||'Anonimo'}}</mat-card-title>
     <mat-card-subtitle>{{question?.room?.name ||'sala'}}</mat-card-subtitle>
-    <div class="container-votes">
+    <div class="container-votes" *ngIf="question!.votes>1" (click)="onOpenUserPane()">
       <mat-icon aria-hidden="false" aria-label="Question's votes" fontIcon="thumb_up" ></mat-icon>
       <span [matBadge]="question?.votes" matBadgeColor="warn" class="badge-votes"></span>
     </div>
@@ -14,12 +14,19 @@
     <p class="question-description">{{question?.description || 'Algo para mostrar'}}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button
+    <button *ngIf="isVoted"
       mat-icon-button color="warn"
+      class="btn-favorite"
+      (click)="onRemoveVote(question!)">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button
+      *ngIf="!isVoted"
+      mat-icon-button color="basic"
       class="btn-favorite"
       (click)="onAddVote(question!)">
       <mat-icon>favorite</mat-icon>
     </button>
   </mat-card-actions>
-  <mat-progress-bar mode="query"></mat-progress-bar>
+  <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
 </mat-card>

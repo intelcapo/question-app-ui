@@ -4,7 +4,7 @@
   <h1>Salas disponibles</h1>
   <div class="container-rooms">
   <div>
-    <app-rooms-form (createRoom)="onCreateRoom($event)"></app-rooms-form>
+    <app-rooms-form (createRoom)="handleCreateRoom($event)"></app-rooms-form>
   </div>
   <mat-divider></mat-divider>
   <div *ngIf="rooms.length > 0">

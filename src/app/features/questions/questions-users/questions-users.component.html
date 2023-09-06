@@ -1,0 +1,16 @@
+<div class="container-users">
+  <mat-icon (click)="closePanel()">close</mat-icon>
+  <div class="container-question-data">
+      <h3>
+        {{question?.description}}
+      </h3>
+  </div>
+  <div class="container-users-data">
+    <h4>Votos</h4>
+    <ul>
+      <li *ngFor="let user of votes?.users">
+        {{user.name}}
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreateRoomDTO } from 'src/app/interfaces';
 
 @Component({
@@ -12,14 +12,25 @@ export class RoomsFormComponent {
    *
    */
   constructor(private formBuilder: FormBuilder) {
+    this.validateForm()
   }
 
+
   frmRoom: FormGroup = this.formBuilder.group({
-    name: ''
+    name: '',
   })
+
+  isFormInvalid: boolean = true
 
   @Output()
   createRoom = new EventEmitter<CreateRoomDTO>()
+
+
+  validateForm(){
+    return this.frmRoom.get('name')?.valueChanges.subscribe((data)=>{
+      this.isFormInvalid = data.trim() == '' ? true: false
+    })
+  }
 
   onSubmit(){
     this.createRoom.emit(this.frmRoom.value)
@@ -28,5 +39,6 @@ export class RoomsFormComponent {
 
   resetForm(){
     this.frmRoom.reset()
+    this.isFormInvalid = true
   }
 }

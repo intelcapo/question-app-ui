@@ -7,9 +7,11 @@
     <mat-divider></mat-divider>
     <div *ngIf="questions.length > 0" class="container-questions-list">
       <div *ngFor="let question of questions">
-        <app-questions-template [question]="question"
+        <app-questions-template
+          [question]="question"
           (addVote)="handleAddVote($event)"
-          (removeVote)="handleRemoveVote($event)"></app-questions-template>
+          (removeVote)="handleRemoveVote($event)"
+          (openUserPanel)="showUsersPanel(question)"></app-questions-template>
       </div>
     </div>
     <div *ngIf="questions.length == 0">
@@ -17,3 +19,10 @@
     </div>
   </div>
 </div>
+
+<app-questions-users
+  *ngIf="isUsersPanelActive"
+  [question]="questionSelected"
+  [votes]="votesForQuestion"
+  (userPanelClose)="closeUsersPanel()">
+</app-questions-users>
