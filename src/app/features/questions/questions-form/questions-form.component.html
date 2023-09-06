@@ -3,7 +3,11 @@
     <mat-label>Haz una pregunta</mat-label>
     <textarea matInput placeholder="Ex. Esa pregunta es para don ligero..." formControlName="description"></textarea>
   </mat-form-field>
-  <button type="submit" mat-fab color="primary" class="btn-add-question">
+  <button
+    type="submit"
+    mat-fab color="primary"
+    class="btn-add-question"
+    [disabled]="isFormInvalid">
     <mat-icon>add</mat-icon>
   </button>
 </form>

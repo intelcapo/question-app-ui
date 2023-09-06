@@ -8,4 +8,6 @@ export interface Room {
 }
 
 
-export interface CreateRoomDTO extends Omit<Room, 'id'| 'creationDate' | 'user'> {}
+export interface CreateRoomDTO extends Omit<Room, 'id'| 'creationDate'> {
+  userId: string
+}

@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-header>
+    <h2 mat-dialog-title>Dejanos saber quien eres</h2>
+  </mat-card-header>
+  <mat-card-content >
+    <div mat-dialog-content>
+      <form [formGroup]="frmUser">
+        <div>
+          <span>Si deseas que aparezca tu nombre en la pregunta, por favor dejanos saber quien eres, de lo contrario dale click en el boton cancelar para continuar como anonimo</span>
+        </div>
+        <div class="frm-user-fields">
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input type="text" placeholder="nombre" matInput formControlName="name">
+          </mat-form-field>
+        </div>
+        <div mat-dialog-actions class="frm-user-actions">
+          <button
+            mat-button
+            mat-raised-button
+            color="primary"
+            [mat-dialog-close]="frmUser.value">
+              Guardar
+          </button>
+          <button
+            mat-button
+            mat-raised-button
+            color="warn"
+            (click)="continueAsAnonymous()">
+              Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

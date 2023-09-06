@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateRoomDTO, Room } from 'src/app/interfaces';
+import { CreateRoomDTO, Room, User } from 'src/app/interfaces';
 import { RoomsService } from './rooms.service';
+import { CoreService } from '../../core/core.service';
+import { NavigationService } from '../../core/navigation.service';
 
 @Component({
   selector: 'app-rooms',
@@ -10,12 +12,25 @@ import { RoomsService } from './rooms.service';
 export class RoomsComponent implements OnInit {
   rooms: Room[] = []
 
-  constructor(private roomsService:RoomsService) {
+  user: User | null = null
+
+  constructor(
+    private roomsService:RoomsService,
+    private coreService: CoreService,
+    private navigationService: NavigationService) {
 
   }
 
   ngOnInit(): void {
+    this.validateUserLogged()
     this.getRoomList()
+  }
+
+  validateUserLogged(){
+    this.user = this.coreService.getUserLogged()
+    if(!this.user){
+      this.navigationService.navigateToUsers()
+    }
   }
 
   getRoomList(){
@@ -29,8 +44,9 @@ export class RoomsComponent implements OnInit {
     })
   }
 
-  onCreateRoom(roomToCreate: CreateRoomDTO){
-    this.roomsService.create(roomToCreate).subscribe({
+  handleCreateRoom(roomToCreate: CreateRoomDTO){
+    let room: CreateRoomDTO = { ...roomToCreate, user: this.user || {id:'1',name:'Anonimo'}}
+    this.roomsService.create(room).subscribe({
       next: (response)=>{
         console.log(response)
       },

@@ -24,22 +24,37 @@ export class QuestionsTemplateComponent {
     } as User
   }
 
+  isAlreadyVoted: boolean = false
+
   @Output()
   addVote: EventEmitter<Question> = new EventEmitter<Question>()
 
   @Output()
   removeVote: EventEmitter<Question> = new EventEmitter<Question>()
 
+  @Output()
+  openUserPanel: EventEmitter<boolean> = new EventEmitter<boolean>()
+
+  get isVoted(){
+    return this.question?.isVoted
+  }
+
   constructor() {
 
   }
 
   onAddVote(question: Question){
+    this.isAlreadyVoted = true
     this.addVote.emit(question)
   }
 
   onRemoveVote(question: Question){
+    this.isAlreadyVoted = false
     this.removeVote.emit(question)
+  }
+
+  onOpenUserPane(){
+    this.openUserPanel.emit()
   }
 
 }

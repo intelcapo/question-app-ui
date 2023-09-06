@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: ()=> import('./features/questions/questions.module').then(mdl => mdl.QuestionsModule)
   },
   {
+    path: 'users',
+    loadChildren: ()=> import('./features/users/users.module').then(mdl => mdl.UsersModule)
+  },
+  {
     path: '',
     redirectTo: '/rooms',
     pathMatch: 'full'

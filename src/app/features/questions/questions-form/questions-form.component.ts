@@ -9,6 +9,8 @@ import { CreateQuestionDTO } from 'src/app/interfaces';
 })
 export class QuestionsFormComponent {
 
+  isFormInvalid: boolean = true
+
   frmQuestion: FormGroup = this.formBuilder.group({
     description: ''
   })
@@ -16,11 +18,22 @@ export class QuestionsFormComponent {
   @Output()
   createQuestion: EventEmitter<CreateQuestionDTO> = new EventEmitter<CreateQuestionDTO>()
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    this.validateFrom()
+  }
+
+  validateFrom(){
+    this.frmQuestion.get('description')!.valueChanges.subscribe({
+      next: (data)=>{
+        this.isFormInvalid = data.toString().trim() == ''
+      }
+    })
+  }
 
   onSubmit(){
     this.createQuestion.emit(this.frmQuestion.value)
     this.frmQuestion.reset()
+    this.isFormInvalid = true
   }
 
 }
