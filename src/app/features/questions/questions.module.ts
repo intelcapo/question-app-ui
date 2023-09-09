@@ -14,7 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatBadgeModule } from '@angular/material/badge';
 import { QuestionsUsersComponent } from './questions-users/questions-users.component'
-
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
+import { QuestionsSuggestionsComponent } from './questions-suggestions/questions-suggestions.component';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { QuestionsUsersComponent } from './questions-users/questions-users.compo
     QuestionsComponent,
     QuestionsFormComponent,
     QuestionsTemplateComponent,
-    QuestionsUsersComponent
+    QuestionsUsersComponent,
+    QuestionsSuggestionsComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,9 @@ import { QuestionsUsersComponent } from './questions-users/questions-users.compo
     MatInputModule,
     MatIconModule,
     MatProgressBarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTabsModule,
+    MatDialogModule
   ]
 })
 export class QuestionsModule { }

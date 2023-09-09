@@ -18,6 +18,11 @@ export class QuestionsFormComponent {
   @Output()
   createQuestion: EventEmitter<CreateQuestionDTO> = new EventEmitter<CreateQuestionDTO>()
 
+  filteredTerms: string[] = []
+
+  @Output()
+  filterTerms: EventEmitter<string[]> = new EventEmitter<string[]>()
+
   constructor(private formBuilder: FormBuilder) {
     this.validateFrom()
   }
@@ -26,14 +31,23 @@ export class QuestionsFormComponent {
     this.frmQuestion.get('description')!.valueChanges.subscribe({
       next: (data)=>{
         this.isFormInvalid = data.toString().trim() == ''
+        this.searchAnddFilterTerms(data)
       }
     })
+  }
+
+  searchAnddFilterTerms(questionDescription: string){
+    let terms = questionDescription.split(' ')
+    this.filteredTerms = terms.filter(term=> term.length >=3)
+
+    this.filterTerms.emit(this.filteredTerms)
   }
 
   onSubmit(){
     this.createQuestion.emit(this.frmQuestion.value)
     this.frmQuestion.reset()
     this.isFormInvalid = true
+    this.filteredTerms = []
   }
 
 }

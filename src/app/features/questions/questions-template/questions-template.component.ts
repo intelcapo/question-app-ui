@@ -26,6 +26,9 @@ export class QuestionsTemplateComponent {
 
   isAlreadyVoted: boolean = false
 
+  @Input()
+  isRoomOwnerLogged: boolean = false
+
   @Output()
   addVote: EventEmitter<Question> = new EventEmitter<Question>()
 
@@ -34,6 +37,9 @@ export class QuestionsTemplateComponent {
 
   @Output()
   openUserPanel: EventEmitter<boolean> = new EventEmitter<boolean>()
+
+  @Output()
+  answerQuestion: EventEmitter<Question> = new EventEmitter<Question>()
 
   get isVoted(){
     return this.question?.isVoted
@@ -55,6 +61,10 @@ export class QuestionsTemplateComponent {
 
   onOpenUserPane(){
     this.openUserPanel.emit()
+  }
+
+  onAnswer(question: Question){
+    this.answerQuestion.emit(question)
   }
 
 }

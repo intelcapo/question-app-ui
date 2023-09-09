@@ -3,26 +3,52 @@
     <div>
       <h1>{{currentRoom?.name}}</h1>
     </div>
-    <app-questions-form (createQuestion)="handleCreateQuestion($event)"></app-questions-form>
-    <mat-divider></mat-divider>
-    <div *ngIf="questions.length > 0" class="container-questions-list">
-      <div *ngFor="let question of questions">
-        <app-questions-template
-          [question]="question"
-          (addVote)="handleAddVote($event)"
-          (removeVote)="handleRemoveVote($event)"
-          (openUserPanel)="showUsersPanel(question)"></app-questions-template>
-      </div>
-    </div>
-    <div *ngIf="questions.length == 0">
-      <h3>No hay preguntas aun en esta sala</h3>
-    </div>
+    <app-questions-form
+      *ngIf="!isRoomOwnerLogged"
+      (filterTerms)="handleQuestionFilter($event)"
+      (createQuestion)="handleCreateQuestion($event)">
+    </app-questions-form>
+    <app-questions-suggestions
+    *ngIf="questionsSuggested.length > 0"
+    [questionsSuggested]="questionsSuggested"
+    (addVote)="handleAddVote($event)">
+    </app-questions-suggestions>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+      <mat-tab label="Pendientes">
+        <div *ngIf="questionsWithoutAnswer.length > 0" class="container-questions-list">
+          <div *ngFor="let question of questionsWithoutAnswer">
+            <app-questions-template
+              [question]="question"
+              [isRoomOwnerLogged]="isRoomOwnerLogged"
+              (addVote)="handleAddVote($event)"
+              (removeVote)="handleRemoveVote($event)"
+              (answerQuestion)="handleAnswer($event)"
+              (openUserPanel)="showUsersPanel(question)"></app-questions-template>
+          </div>
+        </div>
+        <div *ngIf="questionsWithoutAnswer.length == 0" class="container-questions-list">
+          <h3>No hay preguntas aun en esta sala</h3>
+        </div>
+      </mat-tab>
+      <mat-tab label="Contestadas">
+        <div *ngIf="questionsAnswered.length > 0" class="container-questions-list">
+          <div *ngFor="let questionWithAnser of questionsAnswered">
+            <app-questions-template
+              [question]="questionWithAnser"
+              [isRoomOwnerLogged]="isRoomOwnerLogged"
+              (addVote)="handleAddVote($event)"
+              (removeVote)="handleRemoveVote($event)"
+              (answerQuestion)="handleAnswer($event)"
+              (openUserPanel)="showUsersPanel(questionWithAnser)"></app-questions-template>
+          </div>
+        </div>
+        <div *ngIf="questionsAnswered.length == 0" class="container-questions-list">
+          <h3>No hay preguntas Contestadas</h3>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
   </div>
 </div>
 
-<app-questions-users
-  *ngIf="isUsersPanelActive"
-  [question]="questionSelected"
-  [votes]="votesForQuestion"
-  (userPanelClose)="closeUsersPanel()">
-</app-questions-users>
+

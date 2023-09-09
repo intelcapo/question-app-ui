@@ -36,7 +36,6 @@ export class RoomsComponent implements OnInit {
   getRoomList(){
     this.roomsService.getAllRooms().subscribe({
       next: (roomsResponse: Room[])=>{
-        console.log(roomsResponse.length)
         this.rooms = roomsResponse
       }, error:()=> {
         this.rooms = []
@@ -48,7 +47,7 @@ export class RoomsComponent implements OnInit {
     let room: CreateRoomDTO = { ...roomToCreate, user: this.user || {id:'1',name:'Anonimo'}}
     this.roomsService.create(room).subscribe({
       next: (response)=>{
-        console.log(response)
+
       },
       error: (error)=>{
         console.error(error)

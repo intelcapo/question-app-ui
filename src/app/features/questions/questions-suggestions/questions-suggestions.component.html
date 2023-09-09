@@ -1,0 +1,12 @@
+<div class="container-suggestions">
+<mat-card class="container-suggestions-card">
+  <mat-card-title>
+    Preguntas sugeridas
+  </mat-card-title>
+  <mat-card-content>
+    <ul *ngFor="let question of questionsSuggested">
+      <li (click)="onAddVote(question)">{{question.description}}</li>
+    </ul>
+  </mat-card-content>
+</mat-card>
+</div>
