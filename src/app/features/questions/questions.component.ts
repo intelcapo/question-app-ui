@@ -6,6 +6,8 @@ import { RoomsService } from '../rooms/rooms.service';
 import { CoreService } from 'src/app/core/core.service';
 import { NavigationService } from 'src/app/core/navigation.service';
 import { VotesService } from './votes.service';
+import { MatDialog } from '@angular/material/dialog';
+import { QuestionsUsersComponent } from './questions-users/questions-users.component';
 
 @Component({
   selector: 'app-questions',
@@ -14,6 +16,13 @@ import { VotesService } from './votes.service';
 })
 export class QuestionsComponent implements OnInit, OnDestroy{
   questions: Question[] = []
+
+  questionsWithoutAnswer: Question[] = []
+
+  questionsAnswered: Question[] = []
+
+  questionsSuggested: Question[] = []
+
   roomId: string = ''
 
   currentRoom: Room | null = {
@@ -33,13 +42,20 @@ export class QuestionsComponent implements OnInit, OnDestroy{
 
   questionsInterval: any
 
+  roomOwner: User | null= null
+
+  currentUser: User | null = null
+
+  isRoomOwnerLogged: boolean = false
+
   constructor(
     private questionsService: QuestionsService,
     private activatedRoute: ActivatedRoute,
     private roomsService: RoomsService,
     private coreService: CoreService,
     private navigationService: NavigationService,
-    private votesService: VotesService){}
+    private votesService: VotesService,
+    public dialog: MatDialog,){}
 
 
   ngOnInit(): void {
@@ -50,10 +66,11 @@ export class QuestionsComponent implements OnInit, OnDestroy{
     this.createIntervalToGetQuestions()
   }
 
+
   createIntervalToGetQuestions(){
     this.questionsInterval = setInterval(()=>{
       this.getRoomQuestions(this.roomId)
-    }, 10000)
+    }, 30000)
   }
 
   ngOnDestroy(): void {
@@ -72,8 +89,23 @@ export class QuestionsComponent implements OnInit, OnDestroy{
     this.roomsService.getById(roomId).subscribe({
       next: (room: Room)=>{
         this.currentRoom = room
+        this.getRoomOwner()
+        this.getCurrentUser()
+        this.validateRoomOwner()
       }
     })
+  }
+
+  getRoomOwner(){
+    this.roomOwner = this.currentRoom?.user!
+  }
+
+  getCurrentUser(){
+    this.currentUser = this.coreService.getUserLogged()
+  }
+
+  validateRoomOwner(){
+    this.isRoomOwnerLogged = this.roomOwner?.id == this.currentUser?.id
   }
 
   getUrlParams(){
@@ -89,12 +121,23 @@ export class QuestionsComponent implements OnInit, OnDestroy{
       next: (questionsResponse)=>{
         this.questions = questionsResponse
         this.validateRoomVotes(this.questions)
+        this.questionsAnswered = this.getQuestionsAnswered([...this.questions])
+        this.questionsWithoutAnswer = this.getQuestionsWithoutAnswer([...this.questions])
       },
       error: ()=>{
         this.questions = []
       }
     })
   }
+
+  getQuestionsAnswered(questions: Question[]){
+    return questions.filter(question => question.isAnswered == true)
+  }
+
+  getQuestionsWithoutAnswer(questions: Question[]){
+    return questions.filter(question => question.isAnswered == false)
+  }
+
 
   validateRoomVotes(currentQuestions:Question[]){
     this.votesService.getVotesByRoomId(this.roomId).subscribe({
@@ -109,7 +152,8 @@ export class QuestionsComponent implements OnInit, OnDestroy{
     question = {...question, roomId: this.roomId, user: this.user || {id:'1',name:'Anonimo'}}
     this.questionsService.create(question).subscribe({
       next: (createQuestionsResponse)=>{
-        console.log(`Question created`)
+
+        this.questionsSuggested= []
       },
       error: ()=>{
         this.questions = []
@@ -130,6 +174,7 @@ export class QuestionsComponent implements OnInit, OnDestroy{
       },
       complete: ()=>{
         this.getRoomQuestions(this.roomId)
+        this.questionsSuggested = []
       }
     })
   }
@@ -149,9 +194,7 @@ export class QuestionsComponent implements OnInit, OnDestroy{
   }
 
   showUsersPanel(question: Question){
-    this.isUsersPanelActive = true
-    this.questionSelected = question
-    this.votesForQuestion = this.votesService.getVotesByQuestionId(question.id)
+    this.dialog.open(QuestionsUsersComponent, {data:  {...question}})
   }
 
   closeUsersPanel(){
@@ -160,6 +203,36 @@ export class QuestionsComponent implements OnInit, OnDestroy{
     this.votesForQuestion = undefined
   }
 
+
+  handleAnswer(question: Question){
+    this.questionsService.answer(question.id).subscribe({
+      next: (question)=>{
+
+      },
+      error: (error)=>{
+        console.error(error.error)
+      },
+      complete: ()=>{
+        this.getRoomQuestions(this.roomId)
+      }
+    })
+  }
+
+  handleQuestionFilter(termsToFilter: string[]){
+    this.questionsSuggested = []
+    this.questions.forEach(question =>{
+      for (const termToSearch of termsToFilter) {
+        if(question.description.toLowerCase().includes(termToSearch.toLowerCase())){
+          this.questionsSuggested.push(question)
+          break
+        }
+      }
+    })
+  }
+
+  getArrayOfTerms(questionDescription: string): string[]{
+    return questionDescription.split(' ')
+  }
 
 
 }

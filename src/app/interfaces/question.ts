@@ -9,6 +9,7 @@ export interface Question {
   user: User
   room: Room
   isVoted? : boolean
+  isAnswered?: boolean
 }
 
 export interface CreateQuestionDTO extends Omit<Question,'id' |'creationDate' | 'votes'>{

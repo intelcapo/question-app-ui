@@ -1,0 +1,14 @@
+.container-suggestions{
+  padding: 5px;
+  position: absolute;
+  z-index: 10;
+  min-width: 400px;
+  max-width: 400px;
+  .container-suggestions-card{
+    padding: 5px;
+
+    ul>li{
+      cursor: pointer;
+    }
+  }
+}

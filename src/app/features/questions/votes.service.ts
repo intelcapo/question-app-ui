@@ -47,7 +47,7 @@ export class VotesService {
     let isVoted: boolean = false
 
     let vote = this.votes.find(voteToFind => voteToFind.questionId == questionId)
-    console.log(vote)
+
     if(vote){
       let userVoted = vote.users.find(usr => usr.id == user.id)
       isVoted = userVoted?true: false

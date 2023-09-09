@@ -8,9 +8,15 @@
 }
 
 
-.btn-favorite{
+.btn-actions  {
+  display: flex;
+  flex-direction: row;
   position: absolute;
   right: 10px;
+}
+
+.btn-answer{
+  color: green;
 }
 
 .badge-votes{

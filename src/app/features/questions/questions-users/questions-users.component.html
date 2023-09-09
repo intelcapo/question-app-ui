@@ -1,5 +1,4 @@
-<div class="container-users">
-  <mat-icon (click)="closePanel()">close</mat-icon>
+<div class="container-users" mat-dialog-content>
   <div class="container-question-data">
       <h3>
         {{question?.description}}
@@ -7,10 +6,10 @@
   </div>
   <div class="container-users-data">
     <h4>Votos</h4>
-    <ul>
+    <ol>
       <li *ngFor="let user of votes?.users">
         {{user.name}}
       </li>
-    </ul>
+    </ol>
   </div>
 </div>

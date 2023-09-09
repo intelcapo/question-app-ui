@@ -52,5 +52,10 @@ export class QuestionsService {
     return this.http.put<Question>(endpoitForRemoveVote, user)
   }
 
+  answer(questionId:string): Observable<Question>{
+    const endpoitForUpdateAnswer = `${this.currentEndpoint}/${questionId}/updateAnswerStatus`
+    return this.http.put<Question>(endpoitForUpdateAnswer, {id: questionId})
+  }
+
 
 }
